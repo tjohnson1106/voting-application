@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>
+      Voting App
+    </title>
+  </head>
+  <body>
+    <h1>
+      Vote on a Topic:
+    </h1>
+    <form action="/vote/new" method="POST" id="pollform">
+      <label for="linux">Linux</label>
+      <input
+        id="linux"
+        type="checkbox"
+        name="linux"
+        class="checkbox"
+        onclick="vote(this)"
+      />
+      <label for="macos">Mac OS</label>
+      <input
+        id="macos"
+        type="checkbox"
+        name="macos"
+        class="checkbox"
+        onclick="vote(this)"
+      />
+      <label for="windows"> Windows </label>
+      <input
+        id="windows"
+        type="checkbox"
+        name="windows"
+        class="checkbox"
+        onclick="vote(this)"
+      />
+      <input type="submit" />
+    </form>
+
+    <br />
+    <hr />
+    <br />
+    <h1>Results:</h1>
+    <p>
+      Linux:
+      <span id="linuxvotes"></span>
+      votes
+    </p>
+    <p>
+      Macos:
+      <span id="macosvotes"></span>
+      votes
+    </p>
+    <p>
+      Windows:
+      <span id="windowsvotes"></span>
+      votes
+    </p>
+
+    <script>
+      window.onload = () => {
+        fetch("/poll").then((results) => {
+          results.json().then((data) => {
+            for (x in data) {
+              console.log(x);
+              console.log(data[x]);
+              document.getElementById(x + "votes").innerText = data[x];
+            }
+          });
+        });
+      };
+    </script>
+  </body>
+</html>
